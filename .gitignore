@@ -16,3 +16,5 @@ target/
 examples
 .idea/
 .vscode/
+# database file
+*.db

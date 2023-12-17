@@ -8,6 +8,7 @@ mod calc;
 /// * `longitude` - 经度
 /// * `latitude` - 纬度
 /// * `ways` - 观测方式：1-肉眼，2-小型双筒，3-天文望远镜，4-深空摄影
+/// * `obj_type` - 目标类型：sun, twin, galaxy, cluster, nebula
 fn main() {
     let args: Vec<String> = std::env::args().collect();
     assert_eq!(args.len(), 5);
