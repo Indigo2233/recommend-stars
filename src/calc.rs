@@ -10,14 +10,16 @@ pub fn visible_stars(longitude: f64, latitude: f64, ways: usize, obj_type: Strin
     // TODO：根据观测方式和光污染等级，计算极限星等
     let limiting_mag = [0.0, 4.5, 8.5, 10.0, 12.0][ways];
     let (sunrise, sunset) = sun_rise_set_time(longitude, latitude);
-    println!("日出时间：{:?}", sunrise);
-    println!("日落时间：{:?}", sunset);
+    // println!("日出时间：{:?}", sunrise);
+    // println!("日落时间：{:?}", sunset);
 
+    // (DECL - ?3 < 87.5 OR DECL - ?3 > -87.5))表示天体在上中天的高度至少为2.5度
+    // TODO: 计算天体的升落时间，要求存在早于日出落下或晚于日落升起
     let mut stmt = conn.prepare(
         "SELECT * FROM stars WHERE
-         Type = ? AND MGA < ?",
+         Type = ?1 AND MGA < ?2 AND (DECL - ?3 < 87.5 OR DECL - ?3 > -87.5)",
     )?;
-    let objects = stmt.query_map(params![&obj_type, limiting_mag], |row| {
+    let objects = stmt.query_map(params![&obj_type, limiting_mag, latitude], |row| {
         Ok(Star {
             id: row.get(0)?,
             name: row.get(1)?,
@@ -27,14 +29,14 @@ pub fn visible_stars(longitude: f64, latitude: f64, ways: usize, obj_type: Strin
         })
     })?;
     for obj in objects {
-        println!("{:?}", obj?.name);
+        print!("{} ", obj?.name);
     }
     Ok(())
 }
 
 // 粗略计算日出日落时间
 // 假设正午在时区基准经度上是12:00（实际不是）
-// 误差在10min以内
+// 误差在10min以内，以今日的日出时间代替明日的
 fn sun_rise_set_time(longitude: f64, latitude: f64) -> (Option<f64>, Option<f64>) {
     use chrono::{Duration, Utc};
     let now = Utc::now();
