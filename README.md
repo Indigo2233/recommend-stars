@@ -1,5 +1,9 @@
 # 推荐天体命令行软件
-用法：`recommend-stars lon lat ways type`
+## 用法
+
+使用Sqlite构建数据库：`sqlite3 stars.db < stars.sql`，
+
+运行命令行程序`recommend-stars lon lat ways type`。
 
 其中
 - `lon`：观测地经度，单位：度
