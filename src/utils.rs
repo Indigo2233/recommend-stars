@@ -1,5 +1,7 @@
 use rusqlite::types::{FromSql, FromSqlResult, ValueRef};
-
+pub const AXIAL_TILT: f64 = 0.409105176667; // In radians
+#[allow(unused)]
+pub const AXIAL_TILT_DEG: f64 = 23.44;
 #[derive(Debug)]
 pub enum ObjType {
     Sun,
