@@ -14,10 +14,7 @@ pub fn visible_stars(_longitude: f64, latitude: f64, ways: usize, obj_type: Stri
     let get_row = |row: &Row| {
         // println!("{:?}", row);
         Ok(Star {
-            id: row.get(0)?,
             name: row.get(1)?,
-            longitude: row.get(3)?,
-            latitude: row.get(4)?,
             obj_type: row.get(5)?,
         })
     };
@@ -79,7 +76,7 @@ pub fn visible_stars(_longitude: f64, latitude: f64, ways: usize, obj_type: Stri
                  )
             )
         ";
-
+    // 入夜后或破晓前的高度即为天体的赤经/赤纬
     let mut stmt = conn.prepare(
         stmt,
     )?;

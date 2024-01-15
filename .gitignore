@@ -18,3 +18,4 @@ examples
 .vscode/
 # database file
 *.db
+constellations.txt

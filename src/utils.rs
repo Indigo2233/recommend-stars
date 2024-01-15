@@ -25,9 +25,8 @@ impl FromSql for ObjType {
 }
 #[derive(Debug)]
 pub struct Star {
-    pub id: i32,
     pub name: String,
-    pub longitude: f64,
-    pub latitude: f64,
+    // pub longitude: f64,
+    // pub latitude: f64,
     pub obj_type: ObjType,
 }
